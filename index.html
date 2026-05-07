@@ -213,6 +213,23 @@
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
     .about-text p { color: var(--muted); font-size: 1rem; line-height: 1.85; margin-bottom: 1.2rem; }
     .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .lsu-badge {
+      margin-top: 2rem;
+      display: inline-block;
+    }
+    .lsu-badge img {
+      height: 70px;
+      width: auto;
+      border-radius: 8px;
+      opacity: 0.92;
+      transition: opacity 0.25s, transform 0.25s;
+      filter: drop-shadow(0 4px 16px rgba(70,29,124,0.4));
+    }
+    .lsu-badge img:hover {
+      opacity: 1;
+      transform: scale(1.04);
+    }
     .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .stat-card {
       background: var(--card); border: 1px solid var(--border);
@@ -283,16 +300,86 @@
     }
     footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; color: var(--gold); }
 
+    /* ── HAMBURGER BUTTON ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none; border: none;
+      cursor: pointer; padding: 4px;
+      z-index: 200;
+    }
+    .hamburger span {
+      display: block; width: 100%; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.35s ease, opacity 0.35s ease, background 0.25s;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--gold); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--gold); }
+
+    /* ── MOBILE MENU OVERLAY ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,12,0.97);
+      backdrop-filter: blur(20px);
+      z-index: 150;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.25s, transform 0.25s;
+    }
+    .mobile-menu a:hover { color: var(--gold); transform: translateX(8px); }
+    .mobile-menu-divider {
+      width: 40px; height: 1px;
+      background: var(--border);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       body { cursor: auto; }
       #cursor, #cursor-ring { display: none; }
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
       .hero { padding: 7rem 1.5rem 3rem; }
       section { padding: 4rem 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .links-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .section-title { font-size: 1.9rem; }
+      #toast { bottom: 1rem; right: 1rem; left: 1rem; max-width: 100%; }
+    }
+    @media (max-width: 400px) {
+      .hero-name { font-size: 2.8rem; }
+      .about-stats { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -303,14 +390,28 @@
   <div id="progress-bar"></div>
   <div id="toast"></div>
 
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about"        onclick="closeMobileMenu()">About</a>
+    <div class="mobile-menu-divider"></div>
+    <a href="#connect"      onclick="closeMobileMenu()">Connect</a>
+    <div class="mobile-menu-divider"></div>
+    <a href="#certificates" onclick="closeMobileMenu()">Certifications</a>
+  </div>
+
   <!-- NAV -->
   <nav id="main-nav">
-    <div class="nav-logo">JY.</div>
+    <div class="nav-logo">JAY.</div>
     <ul class="nav-links">
       <li><a href="#about"        data-section="about">About</a></li>
       <li><a href="#connect"      data-section="connect">Connect</a></li>
-      <li><a href="#certificates" data-section="certificates">Certificates</a></li>
+      <li><a href="#certificates" data-section="certificates">Certifications</a></li>
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
@@ -325,8 +426,7 @@
     </h1>
     <p class="hero-tagline">
       Building purposeful software that connects people — currently developing
-      <em>The Path</em>, a recovery &amp; support web app, and preparing for
-      <strong style="color:var(--gold)">PowerUp 2027</strong> in Denver.
+      <em>The Path</em>, a recovery &amp; support web app.
     </p>
     <div class="hero-cta">
       <a href="#connect" class="btn btn-primary">View My Work</a>
@@ -348,14 +448,18 @@
     </div>
     <div class="about-grid">
       <div class="about-text reveal reveal-delay-1">
-        <p>I'm a <strong>student developer</strong> at LSU New Orleans driven by a belief that technology should serve people — especially those who need it most.</p>
-        <p>My current project, <strong>The Path</strong>, is a full-stack recovery and support web app built with Flask, SQLite, and Python. It features sobriety tracking, daily mood check-ins, and a faith-inspired design — built to make a real difference.</p>
-        <p>I'm actively growing my skills through Codecademy, hands-on projects, and mentorship. I'm preparing for <strong>PowerUp 2027 in Denver</strong> — ready to connect with industry professionals and land an internship that lets me keep building things that matter.</p>
+        <p>I'm a <strong>Computer Science student at LSU New Orleans</strong> with a focus on software development and enterprise systems. I build full-stack web applications, work with SQL and Python, and am actively deepening my knowledge of Java and core CS fundamentals.</p>
+        <p>Before tech, I spent years in <strong>job site supervision and landscaping</strong> — managing projects, leading crews, and solving problems under pressure. That background gave me something most developers are still building: a real work ethic and the ability to deliver. I've also worked in <strong>digital marketing</strong> and built custom workstations, which rounds out my perspective on both the business and technical sides of the industry.</p>
+        <p>My current project, <strong>The Path</strong>, is a full-stack recovery and support app built with Flask, SQLite, and Python — designed with purpose and built from scratch. Outside of that, I'm expanding into enterprise environments, exploring how SQL and modern tooling support large-scale systems.</p>
+        <p>Long term, I'm moving toward <strong>product or project management</strong> — but right now I'm heads-down building, learning, and contributing. If you're working on something meaningful, I'm always open to a conversation.</p>
+        <div class="lsu-badge">
+          <img src="lsu-no.webp" alt="LSU New Orleans" />
+        </div>
       </div>
       <div class="about-stats">
         <div class="stat-card reveal reveal-delay-2"><div class="stat-number">Flask</div><div class="stat-label">Backend Framework</div></div>
         <div class="stat-card reveal reveal-delay-3"><div class="stat-number">SQL</div><div class="stat-label">Database Layer</div></div>
-        <div class="stat-card reveal reveal-delay-4"><div class="stat-number">2027</div><div class="stat-label">PowerUp Denver</div></div>
+        <div class="stat-card reveal reveal-delay-4"><div class="stat-number">NOLA</div><div class="stat-label">Based In</div></div>
         <div class="stat-card reveal reveal-delay-5"><div class="stat-number">The Path</div><div class="stat-label">Featured Project</div></div>
       </div>
     </div>
@@ -384,7 +488,7 @@
       </a>
 
       <a href="https://www.codecademy.com/profiles/93Jourdan" target="_blank" class="link-card reveal reveal-delay-3">
-        <div class="link-icon" style="background:#10141a;"><svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1a2e"/><text x="4" y="17" font-size="12" font-weight="bold" fill="#61dafb" font-family="monospace">&lt;/&gt;</text></svg></div>
+        <div class="link-icon" style="background:#10141a;"><svg fill="#ffffff" width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.742 14.998c0.046-0.004 0.1-0.006 0.154-0.006 0.645 0 1.219 0.304 1.587 0.776l0.003 0.005c0.036 0.052 0.096 0.086 0.164 0.086 0.047 0 0.090-0.016 0.124-0.043l-0 0 1.292-1.15c0.094-0.055 0.072-0.205 0.025-0.28-0.793-0.954-1.98-1.556-3.308-1.556-0.041 0-0.082 0.001-0.122 0.002l0.006-0c-0.079-0.006-0.171-0.009-0.263-0.009-1.768 0-3.268 1.147-3.796 2.737l-0.008 0.028c-0.194 0.653-0.306 1.403-0.306 2.179 0 0.104 0.002 0.207 0.006 0.31l-0-0.015c-0.004 0.093-0.007 0.202-0.007 0.312 0 0.772 0.119 1.515 0.34 2.214l-0.014-0.052c0.529 1.617 2.025 2.764 3.788 2.764 0.098 0 0.196-0.004 0.293-0.011l-0.013 0.001c0.037 0.001 0.080 0.002 0.124 0.002 1.32 0 2.503-0.588 3.302-1.516l0.005-0.006c0.030-0.035 0.047-0.081 0.047-0.131 0-0.060-0.025-0.113-0.066-0.151l-0-0-1.296-1.143c-0.034-0.026-0.076-0.041-0.123-0.041-0.063 0-0.12 0.029-0.157 0.075l-0 0c-0.404 0.527-1.034 0.864-1.742 0.864-0.026 0-0.053-0-0.079-0.001l0.004 0c-0.033 0.002-0.072 0.003-0.11 0.003-0.814 0-1.502-0.541-1.723-1.284l-0.003-0.013c-0.136-0.468-0.215-1.005-0.215-1.56 0-0.103 0.003-0.206 0.008-0.307l-0.001 0.014c-0.003-0.070-0.005-0.153-0.005-0.235 0-0.571 0.084-1.122 0.24-1.642l-0.010 0.040c0.249-0.74 0.936-1.263 1.745-1.263 0.039 0 0.078 0.001 0.117 0.004l-0.005-0zM3.276 25.464c-0 0.004-0 0.009-0 0.014 0 0.080 0.049 0.148 0.119 0.176l0.001 0h15.799c0.071-0.028 0.121-0.096 0.121-0.176 0-0.006-0-0.012-0.001-0.017l0 0.001v-18.956c0-0.004 0-0.009 0-0.014 0-0.080-0.051-0.148-0.122-0.173l-0.001-0h-15.796c-0.071 0.028-0.12 0.095-0.12 0.175 0 0.004 0 0.009 0 0.013l-0-0.001-0.004 18.957zM21.577 4.082c0.020 0.041 0.040 0.091 0.056 0.142l0.002 0.008v23.481c0 0.004 0 0.008 0 0.013 0 0.049-0.018 0.095-0.047 0.13l0-0c-0.039 0.046-0.096 0.075-0.161 0.075-0.003 0-0.005-0-0.008-0h-20.225c-0.008 0.001-0.017 0.002-0.026 0.002-0.035 0-0.068-0.010-0.096-0.027l0.001 0c-0.043-0.041-0.070-0.099-0.070-0.164 0-0.001 0-0.003 0-0.004v0-23.529c-0-0.004-0.001-0.010-0.001-0.015 0-0.079 0.050-0.146 0.119-0.172l0.001-0h20.297c0.053 0 0.103 0.016 0.145 0.043l-0.001-0.001v0.020zM30.779 25.658h-6.992c-0.004-0-0.008-0-0.013-0-0.11 0-0.2 0.090-0.2 0.2 0 0.005 0 0.011 0.001 0.016l-0-0.001v1.893c-0 0.004-0 0.008-0 0.013 0 0.11 0.090 0.2 0.2 0.2 0.005 0 0.011-0 0.016-0.001l-0.001 0h6.99c0.008 0.001 0.017 0.002 0.026 0.002 0.105 0 0.189-0.085 0.189-0.189 0-0.006-0-0.012-0.001-0.018l0 0.001v-1.893c0.001-0.006 0.001-0.013 0.001-0.020 0-0.105-0.085-0.19-0.19-0.19-0.010 0-0.019 0.001-0.028 0.002l0.001-0v-0.015z"/></svg></div>
         <div class="link-info"><div class="link-platform">Codecademy</div><div class="link-name">@93Jourdan</div></div>
         <span class="link-arrow">↗</span>
       </a>
@@ -401,6 +505,27 @@
         <span class="link-arrow">↗</span>
       </a>
 
+      <a href="https://www.instagram.com/93jourdan" target="_blank" class="link-card reveal">
+        <div class="link-icon" style="background:#1a0a1a;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#f09433"/>
+                <stop offset="25%" style="stop-color:#e6683c"/>
+                <stop offset="50%" style="stop-color:#dc2743"/>
+                <stop offset="75%" style="stop-color:#cc2366"/>
+                <stop offset="100%" style="stop-color:#bc1888"/>
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig-grad)" stroke-width="2" fill="none"/>
+            <circle cx="12" cy="12" r="4.5" stroke="url(#ig-grad)" stroke-width="2" fill="none"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-grad)"/>
+          </svg>
+        </div>
+        <div class="link-info"><div class="link-platform">Instagram</div><div class="link-name">@93jourdan</div></div>
+        <span class="link-arrow">↗</span>
+      </a>
+
     </div>
   </section>
 
@@ -410,30 +535,30 @@
   <section id="certificates">
     <div class="section-header reveal">
       <span class="section-number">03</span>
-      <h2 class="section-title">Certificates</h2>
+      <h2 class="section-title">Certifications</h2>
     </div>
     <div class="cert-grid">
 
       <!-- Replace href="#" with your real certificate URL -->
-      <a href="#" class="cert-card reveal reveal-delay-1" onclick="handleCertClick(event,this)">
-        <div class="cert-issuer">Codecademy</div>
-        <div class="cert-title">Add Your Certificate Title Here</div>
-        <div class="cert-date">Month Year</div>
-        <div class="cert-link-hint">↗ View Certificate</div>
+      <a href="https://www.credly.com/badges/ff18fb7f-b340-4914-a709-c67f48d317cb/public_url" target="_blank" class="cert-card reveal reveal-delay-1" onclick="handleCertClick(event,this)">
+        <div class="cert-issuer">Cisco</div>
+        <div class="cert-title">CCST Networking — Lifetime</div>
+        <div class="cert-date">Cisco Certified Support Technician</div>
+        <div class="cert-link-hint">↗ View on Credly</div>
       </a>
 
-      <a href="#" class="cert-card reveal reveal-delay-2" onclick="handleCertClick(event,this)">
-        <div class="cert-issuer">Add Issuer</div>
-        <div class="cert-title">Add Your Certificate Title Here</div>
-        <div class="cert-date">Month Year</div>
-        <div class="cert-link-hint">↗ View Certificate</div>
+      <a href="https://www.credly.com/badges/dd11f5ab-36ab-4e45-a3d8-1a782b6d9ab0/public_url" target="_blank" class="cert-card reveal reveal-delay-2" onclick="handleCertClick(event,this)">
+        <div class="cert-issuer">CompTIA</div>
+        <div class="cert-title">IT Fundamentals+ (ITF+)</div>
+        <div class="cert-date">Computing, Networking & Security Fundamentals</div>
+        <div class="cert-link-hint">↗ View on Credly</div>
       </a>
 
-      <a href="#" class="cert-card reveal reveal-delay-3" onclick="handleCertClick(event,this)">
-        <div class="cert-issuer">Add Issuer</div>
-        <div class="cert-title">Add Your Certificate Title Here</div>
-        <div class="cert-date">Month Year</div>
-        <div class="cert-link-hint">↗ View Certificate</div>
+      <a href="https://www.credly.com/badges/cd89d646-f55a-426d-a8ef-dee3facb3cc2/public_url" target="_blank" class="cert-card reveal reveal-delay-3" onclick="handleCertClick(event,this)">
+        <div class="cert-issuer">Certiport · Pearson VUE</div>
+        <div class="cert-title">IT Specialist — HTML & CSS</div>
+        <div class="cert-date">Webpage Structure & Styling</div>
+        <div class="cert-link-hint">↗ View on Credly</div>
       </a>
 
     </div>
@@ -441,12 +566,33 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">JY.</div>
-    <p>Built with HTML, CSS &amp; JavaScript · Preparing for PowerUp 2027 · Denver</p>
+    <div class="footer-logo">JAY.</div>
+    <p>Built with HTML, CSS &amp; JavaScript</p>
     <p>© 2026 Jourdan Yeager</p>
   </footer>
 
   <script>
+    // ── HAMBURGER MENU ─────────────────
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close menu on outside click
+    mobileMenu.addEventListener('click', e => {
+      if (e.target === mobileMenu) closeMobileMenu();
+    });
+
     // ── CUSTOM CURSOR ──────────────────
     const cursor = document.getElementById('cursor');
     const ring   = document.getElementById('cursor-ring');
@@ -537,7 +683,7 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
     }
-    setTimeout(() => showToast('👋 Welcome! Preparing for <strong>PowerUp 2027</strong> in Denver.'), 2000);
+    setTimeout(() => showToast('👋 Welcome to my portfolio!'), 2000);
 
     // ── CERTIFICATE CLICK ──────────────
     function handleCertClick(e, el) {
