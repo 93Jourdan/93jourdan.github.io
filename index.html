@@ -211,6 +211,23 @@
 
     /* ── ABOUT ── */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+    .lsu-badge-right {
+      grid-column: 2;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+    .lsu-badge-right img {
+      width: 100%;
+      border-radius: 10px;
+      opacity: 0.93;
+      transition: opacity 0.25s, transform 0.25s;
+      filter: drop-shadow(0 6px 24px rgba(70,29,124,0.45));
+    }
+    .lsu-badge-right img:hover {
+      opacity: 1;
+      transform: scale(1.02);
+    }
     .about-text p { color: var(--muted); font-size: 1rem; line-height: 1.85; margin-bottom: 1.2rem; }
     /* ── PROFILE PHOTO ── */
     .profile-photo-wrap {
@@ -390,6 +407,7 @@
       .hero { padding: 7rem 1.5rem 3rem; }
       section { padding: 4rem 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .lsu-badge-right { grid-column: 1; }
       .about-stats { grid-template-columns: 1fr 1fr; }
       .links-grid { grid-template-columns: 1fr; }
       .cert-grid { grid-template-columns: 1fr; }
@@ -475,9 +493,7 @@
         <p>Before tech, I spent years in <strong>job site supervision and landscaping</strong> — managing projects, leading crews, and solving problems under pressure. That background gave me something most developers are still building: a real work ethic and the ability to deliver. I've also worked in <strong>digital marketing</strong> and built custom workstations, which rounds out my perspective on both the business and technical sides of the industry.</p>
         <p>My current project, <strong>The Path</strong>, is a full-stack recovery and support app built with Flask, SQLite, and Python — designed with purpose and built from scratch. Outside of that, I'm expanding into enterprise environments, exploring how SQL and modern tooling support large-scale systems.</p>
         <p>Long term, I'm moving toward <strong>product or project management</strong> — but right now I'm heads-down building, learning, and contributing. If you're working on something meaningful, I'm always open to a conversation.</p>
-        <div class="lsu-badge">
-          <img src="lsu-no.webp" alt="LSU New Orleans" />
-        </div>
+        <div class="lsu-badge" style="display:none;"></div>
       </div>
       <div class="about-stats">
         <div class="stat-card reveal reveal-delay-2"><div class="stat-number">NOLA</div><div class="stat-label">Based In</div></div>
@@ -486,6 +502,9 @@
         <div class="stat-card reveal reveal-delay-5"><div class="stat-number">SQL</div><div class="stat-label">Database Layer · Studying</div></div>
         <div class="stat-card reveal reveal-delay-2"><div class="stat-number">Java</div><div class="stat-label">Language · Studying</div></div>
         <div class="stat-card reveal reveal-delay-3"><div class="stat-number">Frontend</div><div class="stat-label">HTML · CSS · JavaScript</div></div>
+      </div>
+      <div class="lsu-badge-right reveal reveal-delay-2">
+        <img src="lsu-no.webp" alt="LSU New Orleans" />
       </div>
     </div>
   </section>
