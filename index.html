@@ -299,8 +299,8 @@
     .link-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .link-info .link-platform { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
     .link-info .link-name { font-size: 0.95rem; color: var(--text); font-weight: 500; }
-    .link-arrow { margin-left: auto; color: var(--muted); font-size: 1rem; transition: transform 0.25s, color 0.25s; }
-    .link-card:hover .link-arrow { transform: translate(3px, -3px); color: var(--gold); }
+    .link-arrow { margin-left: auto; font-size: 1rem; transition: transform 0.25s, color 0.25s; display: inline-block; transform: scaleX(-1); }
+    .link-card:hover .link-arrow { transform: scaleX(-1) translate(3px, 0); }
 
     /* ── CERTIFICATES ── */
     .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
@@ -533,31 +533,31 @@
       <a href="https://github.com/93Jourdan" target="_blank" class="link-card reveal reveal-delay-1">
         <div class="link-icon" style="background:#1a1a22;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg></div>
         <div class="link-info"><div class="link-platform">GitHub</div><div class="link-name">@93Jourdan</div></div>
-        <span class="link-arrow">↗</span>
+        <span class="link-arrow">🐅</span>
       </a>
 
       <a href="https://www.linkedin.com/in/jourdanyeager/" target="_blank" class="link-card reveal reveal-delay-2">
         <div class="link-icon" style="background:#0a1628;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0077b5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2" fill="#0077b5"/></svg></div>
         <div class="link-info"><div class="link-platform">LinkedIn</div><div class="link-name">Jay Yeager</div></div>
-        <span class="link-arrow">↗</span>
+        <span class="link-arrow">🐅</span>
       </a>
 
       <a href="https://www.codecademy.com/profiles/93Jourdan" target="_blank" class="link-card reveal reveal-delay-3">
         <div class="link-icon" style="background:#10141a;"><svg fill="#ffffff" width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.742 14.998c0.046-0.004 0.1-0.006 0.154-0.006 0.645 0 1.219 0.304 1.587 0.776l0.003 0.005c0.036 0.052 0.096 0.086 0.164 0.086 0.047 0 0.090-0.016 0.124-0.043l-0 0 1.292-1.15c0.094-0.055 0.072-0.205 0.025-0.28-0.793-0.954-1.98-1.556-3.308-1.556-0.041 0-0.082 0.001-0.122 0.002l0.006-0c-0.079-0.006-0.171-0.009-0.263-0.009-1.768 0-3.268 1.147-3.796 2.737l-0.008 0.028c-0.194 0.653-0.306 1.403-0.306 2.179 0 0.104 0.002 0.207 0.006 0.31l-0-0.015c-0.004 0.093-0.007 0.202-0.007 0.312 0 0.772 0.119 1.515 0.34 2.214l-0.014-0.052c0.529 1.617 2.025 2.764 3.788 2.764 0.098 0 0.196-0.004 0.293-0.011l-0.013 0.001c0.037 0.001 0.080 0.002 0.124 0.002 1.32 0 2.503-0.588 3.302-1.516l0.005-0.006c0.030-0.035 0.047-0.081 0.047-0.131 0-0.060-0.025-0.113-0.066-0.151l-0-0-1.296-1.143c-0.034-0.026-0.076-0.041-0.123-0.041-0.063 0-0.12 0.029-0.157 0.075l-0 0c-0.404 0.527-1.034 0.864-1.742 0.864-0.026 0-0.053-0-0.079-0.001l0.004 0c-0.033 0.002-0.072 0.003-0.11 0.003-0.814 0-1.502-0.541-1.723-1.284l-0.003-0.013c-0.136-0.468-0.215-1.005-0.215-1.56 0-0.103 0.003-0.206 0.008-0.307l-0.001 0.014c-0.003-0.070-0.005-0.153-0.005-0.235 0-0.571 0.084-1.122 0.24-1.642l-0.010 0.040c0.249-0.74 0.936-1.263 1.745-1.263 0.039 0 0.078 0.001 0.117 0.004l-0.005-0zM3.276 25.464c-0 0.004-0 0.009-0 0.014 0 0.080 0.049 0.148 0.119 0.176l0.001 0h15.799c0.071-0.028 0.121-0.096 0.121-0.176 0-0.006-0-0.012-0.001-0.017l0 0.001v-18.956c0-0.004 0-0.009 0-0.014 0-0.080-0.051-0.148-0.122-0.173l-0.001-0h-15.796c-0.071 0.028-0.12 0.095-0.12 0.175 0 0.004 0 0.009 0 0.013l-0-0.001-0.004 18.957zM21.577 4.082c0.020 0.041 0.040 0.091 0.056 0.142l0.002 0.008v23.481c0 0.004 0 0.008 0 0.013 0 0.049-0.018 0.095-0.047 0.13l0-0c-0.039 0.046-0.096 0.075-0.161 0.075-0.003 0-0.005-0-0.008-0h-20.225c-0.008 0.001-0.017 0.002-0.026 0.002-0.035 0-0.068-0.010-0.096-0.027l0.001 0c-0.043-0.041-0.070-0.099-0.070-0.164 0-0.001 0-0.003 0-0.004v0-23.529c-0-0.004-0.001-0.010-0.001-0.015 0-0.079 0.050-0.146 0.119-0.172l0.001-0h20.297c0.053 0 0.103 0.016 0.145 0.043l-0.001-0.001v0.020zM30.779 25.658h-6.992c-0.004-0-0.008-0-0.013-0-0.11 0-0.2 0.090-0.2 0.2 0 0.005 0 0.011 0.001 0.016l-0-0.001v1.893c-0 0.004-0 0.008-0 0.013 0 0.11 0.090 0.2 0.2 0.2 0.005 0 0.011-0 0.016-0.001l-0.001 0h6.99c0.008 0.001 0.017 0.002 0.026 0.002 0.105 0 0.189-0.085 0.189-0.189 0-0.006-0-0.012-0.001-0.018l0 0.001v-1.893c0.001-0.006 0.001-0.013 0.001-0.020 0-0.105-0.085-0.19-0.19-0.19-0.010 0-0.019 0.001-0.028 0.002l0.001-0v-0.015z"/></svg></div>
         <div class="link-info"><div class="link-platform">Codecademy</div><div class="link-name">@93Jourdan</div></div>
-        <span class="link-arrow">↗</span>
+        <span class="link-arrow">🐅</span>
       </a>
 
       <a href="https://www.facebook.com/Jourdanyeager" target="_blank" class="link-card reveal reveal-delay-4">
         <div class="link-icon" style="background:#0a1628;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
         <div class="link-info"><div class="link-platform">Facebook</div><div class="link-name">Jourdan Yeager</div></div>
-        <span class="link-arrow">↗</span>
+        <span class="link-arrow">🐅</span>
       </a>
 
       <a href="https://x.com/2jayeager" target="_blank" class="link-card reveal reveal-delay-5">
         <div class="link-icon" style="background:#111;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
         <div class="link-info"><div class="link-platform">X (Twitter)</div><div class="link-name">@2jayeager</div></div>
-        <span class="link-arrow">↗</span>
+        <span class="link-arrow">🐅</span>
       </a>
 
       <a href="https://www.instagram.com/93jourdan" target="_blank" class="link-card reveal">
@@ -578,7 +578,7 @@
           </svg>
         </div>
         <div class="link-info"><div class="link-platform">Instagram</div><div class="link-name">@93jourdan</div></div>
-        <span class="link-arrow">↗</span>
+        <span class="link-arrow">🐅</span>
       </a>
 
     </div>
